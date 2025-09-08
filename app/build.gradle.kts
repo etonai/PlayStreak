@@ -18,8 +18,8 @@ android {
         applicationId = "com.pseddev.playstreak"
         minSdk = 24
         targetSdk = 36
-        versionCode = 21
-        versionName = "1.0.0"
+        versionCode = 23
+        versionName = "1.0.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -62,7 +62,6 @@ android {
             }
         }
         create("pro") {
-            applicationIdSuffix = ".pro"
             versionNameSuffix = "-pro"
             isDebuggable = false
             buildConfigField("boolean", "IS_PRO_VERSION", "true")
