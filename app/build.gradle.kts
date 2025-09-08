@@ -44,8 +44,29 @@ android {
             applicationIdSuffix = ".debug"
             versionNameSuffix = "-debug"
             isDebuggable = true
+            buildConfigField("boolean", "IS_PRO_VERSION", "false")
         }
         release {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            buildConfigField("boolean", "IS_PRO_VERSION", "false")
+            // Use release signing when keystore is configured, otherwise fall back to debug
+            signingConfig = if (signingConfigs.getByName("release").storeFile != null) {
+                signingConfigs.getByName("release")
+            } else {
+                signingConfigs.getByName("debug") // Fallback for development
+            }
+        }
+        create("pro") {
+            applicationIdSuffix = ".pro"
+            versionNameSuffix = "-pro"
+            isDebuggable = false
+            buildConfigField("boolean", "IS_PRO_VERSION", "true")
+            buildConfigField("boolean", "DEBUG", "false")
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
