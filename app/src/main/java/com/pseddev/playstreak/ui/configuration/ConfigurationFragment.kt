@@ -4,20 +4,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.pseddev.playstreak.databinding.FragmentConfigurationBinding
 import com.pseddev.playstreak.utils.PreferencesManager
 import com.pseddev.playstreak.utils.ConfigurationManager
+import com.pseddev.playstreak.utils.ProUserManager
 
 class ConfigurationFragment : Fragment() {
     
     private var _binding: FragmentConfigurationBinding? = null
     private val binding get() = _binding!!
-    
+
     private lateinit var viewModel: ConfigurationViewModel
     private lateinit var preferencesManager: PreferencesManager
     private lateinit var configurationManager: ConfigurationManager
+    private lateinit var proUserManager: ProUserManager
     
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,18 +33,20 @@ class ConfigurationFragment : Fragment() {
     
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        
+
         preferencesManager = PreferencesManager.getInstance(requireContext())
         configurationManager = ConfigurationManager.getInstance(requireContext())
-        
+        proUserManager = ProUserManager.getInstance(requireContext())
+
         // Create ViewModel with custom factory
         viewModel = ViewModelProvider(this, ConfigurationViewModelFactory(preferencesManager))
             .get(ConfigurationViewModel::class.java)
-        
+
         setupObservers()
         setupClickListeners()
         setupPruningToggle()
         setupAchievementCelebrationsToggle()
+        setupProModeToggle()
     }
     
     private fun setupObservers() {
@@ -74,13 +79,28 @@ class ConfigurationFragment : Fragment() {
     private fun setupAchievementCelebrationsToggle() {
         // Set initial state from ConfigurationManager
         binding.switchAchievementCelebrations.isChecked = configurationManager.isAchievementCelebrationEnabled()
-        
+
         // Set up toggle listener
         binding.switchAchievementCelebrations.setOnCheckedChangeListener { _, isChecked ->
             configurationManager.setAchievementCelebrationEnabled(isChecked)
         }
     }
-    
+
+    private fun setupProModeToggle() {
+        // Set initial state from ProUserManager
+        binding.switchProMode.isChecked = proUserManager.isProUser()
+
+        // Set up toggle listener
+        binding.switchProMode.setOnCheckedChangeListener { _, isChecked ->
+            proUserManager.setProUser(isChecked)
+            Toast.makeText(
+                requireContext(),
+                if (isChecked) "Pro Mode enabled" else "Pro Mode disabled",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
