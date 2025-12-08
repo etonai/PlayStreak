@@ -25,7 +25,12 @@ data class PieceOrTechnique(
     val thirdLastPerformanceDate: Long? = null,
     val lastSatisfactoryPractice: Long? = null,
     val lastSatisfactoryPerformance: Long? = null,
-    val lastUpdated: Long = System.currentTimeMillis()
+    val lastUpdated: Long = System.currentTimeMillis(),
+
+    // Piece metadata fields (added in database version 3)
+    val key: String? = null,        // Musical key (e.g., "C Major", "D Minor")
+    val artist: String? = null,     // Composer/Artist name
+    val notes: String? = null       // General notes/comments about the piece
 )
 
 enum class ItemType { 

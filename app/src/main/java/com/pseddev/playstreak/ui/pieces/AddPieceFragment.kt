@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -36,27 +37,55 @@ class AddPieceFragment : Fragment() {
     
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        
+
+        setupKeyDropdown()
         setupClickListeners()
         observeViewModel()
+    }
+
+    private fun setupKeyDropdown() {
+        val keys = listOf(
+            "None",
+            "C Major", "C Minor",
+            "G Major", "G Minor",
+            "D Major", "D Minor",
+            "A Major", "A Minor",
+            "E Major", "E Minor",
+            "B Major", "B Minor",
+            "F# Major", "F# Minor",
+            "Db Major", "Db Minor",
+            "Ab Major", "Ab Minor",
+            "Eb Major", "Eb Minor",
+            "Bb Major", "Bb Minor",
+            "F Major", "F Minor"
+        )
+
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, keys)
+        binding.keyAutoCompleteTextView.setAdapter(adapter)
     }
     
     private fun setupClickListeners() {
         binding.saveButton.setOnClickListener {
             val name = binding.pieceNameEditText.text?.toString()?.trim()
-            
+
             if (name.isNullOrBlank()) {
                 binding.pieceNameInputLayout.error = "Please enter a piece name"
                 return@setOnClickListener
             }
-            
+
             binding.pieceNameInputLayout.error = null
-            
+
             val type = if (binding.radioPiece.isChecked) ItemType.PIECE else ItemType.TECHNIQUE
             // Only mark as favorite if the switch is visible and checked
             val isFavorite = binding.favoriteSwitch.visibility == View.VISIBLE && binding.favoriteSwitch.isChecked
-            
-            viewModel.savePiece(name, type, isFavorite)
+
+            // Capture new metadata fields
+            val artist = binding.artistEditText.text?.toString()?.trim()
+            val selectedKey = binding.keyAutoCompleteTextView.text?.toString()?.trim()
+            val key = if (selectedKey == "None" || selectedKey.isNullOrBlank()) null else selectedKey
+            val notes = binding.notesEditText.text?.toString()?.trim()
+
+            viewModel.savePiece(name, type, isFavorite, key, artist, notes)
         }
         
         binding.cancelButton.setOnClickListener {

@@ -72,7 +72,10 @@ class PiecesFragment : Fragment() {
                 val dialog = EditPieceDialogFragment.newInstance(
                     pieceWithStats.piece.id,
                     pieceWithStats.piece.name,
-                    pieceWithStats.piece.type
+                    pieceWithStats.piece.type,
+                    pieceWithStats.piece.key,
+                    pieceWithStats.piece.artist,
+                    pieceWithStats.piece.notes
                 )
                 dialog.show(parentFragmentManager, "EditPieceDialog")
             },
@@ -117,8 +120,37 @@ class PiecesFragment : Fragment() {
         binding.pieceNameText.text = piece.name
         
         // Basic Information Section
+        // Artist (conditional visibility)
+        if (!piece.artist.isNullOrBlank()) {
+            binding.artistText.text = "Artist: ${piece.artist}"
+            binding.artistText.visibility = View.VISIBLE
+        } else {
+            binding.artistText.visibility = View.GONE
+        }
+
+        // Key (conditional visibility)
+        if (!piece.key.isNullOrBlank()) {
+            binding.keyText.text = "Key: ${piece.key}"
+            binding.keyText.visibility = View.VISIBLE
+        } else {
+            binding.keyText.visibility = View.GONE
+        }
+
+        // Type (always visible)
         binding.pieceTypeText.text = "Type: ${piece.type.name.lowercase().replaceFirstChar { it.uppercase() }}"
+
+        // Notes (conditional visibility)
+        if (!piece.notes.isNullOrBlank()) {
+            binding.notesText.text = "Notes: ${piece.notes}"
+            binding.notesText.visibility = View.VISIBLE
+        } else {
+            binding.notesText.visibility = View.GONE
+        }
+
+        // Favorite (always visible)
         binding.isFavoriteText.text = "Favorite: ${if (piece.isFavorite) "Yes" else "No"}"
+
+        // Created (always visible)
         binding.dateCreatedText.text = "Created: ${DateFormatter.formatDateOnly(piece.dateCreated)}"
         
         // Practice Statistics Section (from Phase 1 statistics)

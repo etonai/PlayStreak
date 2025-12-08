@@ -58,7 +58,14 @@ class AddPieceViewModel(
         }
     }
     
-    fun savePiece(name: String, type: ItemType, isFavorite: Boolean) {
+    fun savePiece(
+        name: String,
+        type: ItemType,
+        isFavorite: Boolean,
+        key: String? = null,
+        artist: String? = null,
+        notes: String? = null
+    ) {
         viewModelScope.launch {
             try {
                 // Check for duplicate name first (case-insensitive)
@@ -67,14 +74,14 @@ class AddPieceViewModel(
                     _saveResult.value = AddPieceResult.DuplicateName
                     return@launch
                 }
-                
+
                 // Check piece limit before saving
                 val currentPieceCount = repository.getAllPiecesAndTechniques().first().size
                 val limit = proUserManager.getPieceLimit()
-                
+
                 // Debug logging
                 android.util.Log.d("AddPieceViewModel", "Current piece count: $currentPieceCount, Limit: $limit, Can add more: ${proUserManager.canAddMorePieces(currentPieceCount)}")
-                
+
                 if (!proUserManager.canAddMorePieces(currentPieceCount)) {
                     val limit = proUserManager.getPieceLimit()
                     _saveResult.value = AddPieceResult.PieceLimitReached(
@@ -84,11 +91,14 @@ class AddPieceViewModel(
                     )
                     return@launch
                 }
-                
+
                 val piece = PieceOrTechnique(
                     name = normalizedName,
                     type = type,
-                    isFavorite = isFavorite
+                    isFavorite = isFavorite,
+                    key = key?.trim()?.takeIf { it.isNotBlank() },
+                    artist = artist?.trim()?.takeIf { it.isNotBlank() },
+                    notes = notes?.trim()?.takeIf { it.isNotBlank() }
                 )
                 
                 repository.insertPieceOrTechnique(piece)

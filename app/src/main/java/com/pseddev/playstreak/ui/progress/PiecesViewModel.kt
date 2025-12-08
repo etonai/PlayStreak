@@ -168,7 +168,14 @@ class PiecesViewModel(
         }
     }
     
-    fun updatePiece(pieceId: Long, newName: String, newType: ItemType) {
+    fun updatePiece(
+        pieceId: Long,
+        newName: String,
+        newType: ItemType,
+        key: String? = null,
+        artist: String? = null,
+        notes: String? = null
+    ) {
         viewModelScope.launch {
             try {
                 val currentPiece = repository.getPieceOrTechniqueById(pieceId)
@@ -176,6 +183,9 @@ class PiecesViewModel(
                     val updatedPiece = piece.copy(
                         name = newName,
                         type = newType,
+                        key = key?.trim()?.takeIf { it.isNotBlank() },
+                        artist = artist?.trim()?.takeIf { it.isNotBlank() },
+                        notes = notes?.trim()?.takeIf { it.isNotBlank() },
                         lastUpdated = System.currentTimeMillis()
                     )
                     repository.updatePieceOrTechnique(updatedPiece)

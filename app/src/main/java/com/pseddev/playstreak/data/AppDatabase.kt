@@ -20,8 +20,8 @@ import com.pseddev.playstreak.data.entities.ItemType
 import com.pseddev.playstreak.data.entities.PieceOrTechnique
 
 @Database(
-    entities = [PieceOrTechnique::class, Activity::class, Achievement::class], 
-    version = 5, 
+    entities = [PieceOrTechnique::class, Activity::class, Achievement::class],
+    version = 6,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
@@ -217,7 +217,7 @@ abstract class AppDatabase : RoomDatabase() {
         private val MIGRATION_4_5 = object : Migration(4, 5) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 Log.d("Migration", "Starting migration from version 4 to 5")
-                
+
                 try {
                     // Clean up achievements table to fix duplicate issues and force fresh initialization
                     // This will clear all achievement data to allow proper re-initialization
@@ -233,7 +233,7 @@ abstract class AppDatabase : RoomDatabase() {
                             dateCreated INTEGER NOT NULL DEFAULT ${System.currentTimeMillis()}
                         )
                     """)
-                    
+
                     Log.d("Migration", "Migration from version 4 to 5 completed successfully - achievements will be re-initialized")
                 } catch (e: Exception) {
                     Log.e("Migration", "Error during migration from version 4 to 5", e)
@@ -241,7 +241,26 @@ abstract class AppDatabase : RoomDatabase() {
                 }
             }
         }
-        
+
+        private val MIGRATION_5_6 = object : Migration(5, 6) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                Log.d("Migration", "Starting migration from version 5 to 6")
+
+                try {
+                    // Add new metadata columns to pieces_techniques table
+                    // All columns are nullable to support existing pieces
+                    database.execSQL("ALTER TABLE pieces_techniques ADD COLUMN key TEXT")
+                    database.execSQL("ALTER TABLE pieces_techniques ADD COLUMN artist TEXT")
+                    database.execSQL("ALTER TABLE pieces_techniques ADD COLUMN notes TEXT")
+
+                    Log.d("Migration", "Migration from version 5 to 6 completed successfully")
+                } catch (e: Exception) {
+                    Log.e("Migration", "Error during migration from version 5 to 6", e)
+                    throw e
+                }
+            }
+        }
+
         fun getDatabase(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
@@ -249,7 +268,7 @@ abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java,
                     "playstreak_database"
                 )
-                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5)
+                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6)
                 .build()
                 INSTANCE = instance
                 instance

@@ -159,6 +159,25 @@
                     android:textAppearance="?attr/textAppearanceSubtitle1"
                     android:textStyle="bold" />
 
+                <!-- Artist -->
+                <TextView
+                    android:id="@+id/artistText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:visibility="gone" />
+
+                <!-- Key -->
+                <TextView
+                    android:id="@+id/keyText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:visibility="gone" />
+
+                <!-- Type -->
                 <TextView
                     android:id="@+id/pieceTypeText"
                     android:layout_width="wrap_content"
@@ -166,6 +185,16 @@
                     android:layout_marginTop="4dp"
                     android:textAppearance="?attr/textAppearanceBody2" />
 
+                <!-- Notes -->
+                <TextView
+                    android:id="@+id/notesText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:visibility="gone" />
+
+                <!-- Favorite -->
                 <TextView
                     android:id="@+id/isFavoriteText"
                     android:layout_width="wrap_content"
@@ -173,6 +202,7 @@
                     android:layout_marginTop="4dp"
                     android:textAppearance="?attr/textAppearanceBody2" />
 
+                <!-- Created -->
                 <TextView
                     android:id="@+id/dateCreatedText"
                     android:layout_width="wrap_content"

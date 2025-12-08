@@ -94,6 +94,67 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/typeCard" />
 
+    <!-- Artist field -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/artistInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:hint="Artist/Composer (optional)"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/favoriteSwitch">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/artistEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapWords"
+            android:maxLength="100" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Key field -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/keyInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Key (optional)"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/artistInputLayout">
+
+        <AutoCompleteTextView
+            android:id="@+id/keyAutoCompleteTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Notes field -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/notesInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Notes (optional)"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/keyInputLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/notesEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine|textCapSentences"
+            android:maxLength="255"
+            android:minLines="3"
+            android:gravity="top|start" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/saveButton"
@@ -104,7 +165,7 @@
         android:text="Save Piece"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/favoriteSwitch" />
+        app:layout_constraintTop_toBottomOf="@+id/notesInputLayout" />
 
     <Button
         android:id="@+id/cancelButton"
