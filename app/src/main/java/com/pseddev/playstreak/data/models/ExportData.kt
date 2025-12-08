@@ -48,16 +48,25 @@ data class ExportInfo(
 data class ExportPiece(
     @SerializedName("id")
     val id: Long,
-    
+
     @SerializedName("name")
     val name: String,
-    
+
     @SerializedName("type")
     val type: ItemType,
-    
+
     @SerializedName("isFavorite")
     val isFavorite: Boolean,
-    
+
+    @SerializedName("key")
+    val key: String? = null,
+
+    @SerializedName("artist")
+    val artist: String? = null,
+
+    @SerializedName("notes")
+    val notes: String? = null,
+
     @SerializedName("statistics")
     val statistics: PieceStatistics
 )
