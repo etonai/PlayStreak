@@ -4,6 +4,8 @@ An Android application for tracking music practice activities, performances, and
 
 **Current Version**: 1.0.8.15-beta
 
+**Download on Google Play**: [PlayStreak on Google Play](https://play.google.com/store/apps/details?id=com.pseddev.playstreak)
+
 **AI-Assisted Development**: This project was developed collaboratively with Claude Opus (initial development), Claude Sonnet (bug fixes & refinements), ChatGPT and Cursor (design consultation).
 
 > **Project Origins**: See [`app/docs/initial-prompt.md`](app/docs/initial-prompt.md) for the original project requirements and design concepts that guided this application's development.
