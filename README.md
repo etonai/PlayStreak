@@ -1,6 +1,6 @@
 # PlayStreak 🎵
 
-An Android application for tracking music practice activities, performances, and progress. Built using Kotlin and AndroidX libraries.
+PlayStreak is an Android app for musicians to log practice sessions, performances, and progress — helping you maintain streaks, track quality levels, and visualize your musical development over time. It is built natively for Android using Kotlin, Room (SQLite), MVVM architecture, and Material Design components.
 
 **Current Version**: 1.0.8.15-beta
 
@@ -10,11 +10,24 @@ An Android application for tracking music practice activities, performances, and
 
 > **Project Origins**: See [`app/docs/initial-prompt.md`](app/docs/initial-prompt.md) for the original project requirements and design concepts that guided this application's development.
 
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Language | Kotlin 2.0.21 |
+| Platform | Android (Min SDK 24 / Android 7.0, Target SDK 36) |
+| UI | Material Design Components, AndroidX Fragments |
+| Architecture | MVVM — ViewModel + LiveData + Repository |
+| Database | Room (SQLite) |
+| Navigation | AndroidX Navigation Component |
+| Calendar | Kizitonwose CalendarView |
+| Build | Gradle with Kotlin DSL |
+| Testing | JUnit (unit), Espresso (UI) |
+
 ## Known Issues & Planned Features
 
 ⚠️ **Known Issue**: Calendar month swiping is partially disabled but may still work inconsistently. Month navigation should only use Previous/Next buttons. See Bug #1 in [`app/docs/bugs.md`](app/docs/bugs.md) for details.
 
-🚧 **Planned Feature**: Google Drive sync integration for seamless data backup and synchronization across devices.
 
 ## Features
 
@@ -77,14 +90,6 @@ An Android application for tracking music practice activities, performances, and
 - **Room Database**: Local SQLite database with DAOs
 - **Navigation Component**: Single-activity architecture with fragments
 - **Material Design**: Modern UI following Material Design guidelines
-
-### Key Technologies
-- **Language**: Kotlin 2.0.21
-- **Min SDK**: 24 (Android 7.0)
-- **Target SDK**: 36
-- **Database**: Room with SQLite
-- **Calendar Library**: Kizitonwose CalendarView
-- **Build System**: Gradle with Kotlin DSL
 
 ### Project Structure
 ```
