@@ -10,8 +10,10 @@ PlayStreak is an Android app for musicians to log practice sessions, performance
 
 > **Project Origins**: See [`app/docs/initial-prompt.md`](app/docs/initial-prompt.md) for the original project requirements and design concepts that guided this application's development.
 
-<img src="images/PlayStreakCalendar.jpg" width="400"/>
-<img src="images/PlayStreakDashboard.png" width="400"/>
+<p align="center">
+  <img src="images/PlayStreakCalendar.jpg" width="48%" />
+  <img src="images/PlayStreakDashboard.png" width="48%" />
+</p>
 
 ## Tech Stack
 
