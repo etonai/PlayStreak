@@ -1,0 +1,31 @@
+Ideas for MyStreak (modeled after PlayStreak)
+
+Definitions:
+Task - Something that the user should do/perform. Each time the user does the TASK it is called an ACTIVITY
+Activity - Some TASK that the user has done at a specific time
+
+
+Like PLayStreak, the Dashboard will list the current streak, Today's activities, Yesterday's activities, Week Summary
+The dashboard will also include a list of HIGH priority Tasks that haven't been performed today yet.
+The "current streak" is active if ANY activity is performed that day
+
+Like PlayStreak, the app will consist of tabs that include Dashboard and Calendar.
+A new tab will include Tasks, which will function in many ways like Pieces in PlayStreak
+
+A Task will have:
+Task Name
+Task Color
+Task Priority (High/Low)
+Task minimum success
+Task medium success
+Task high success
+
+The calendar will be similar to the PlayStreak calendar, but the Activity Level Color guide will be different:
+
+Light Blue - Performed at least one Activity
+Medium Blue - Performed at least one High Priority activity
+Dark Blue - Performed at least half (round down) of all High Priority activities available that day (I specify available that day in case more activities are added after the day is complete)
+Bright Green - Performed all of the High Priority Activities available that day
+
+The calendar activity listing will list all of the activities performed that day, including the color of the activity, time, and level of success
+
