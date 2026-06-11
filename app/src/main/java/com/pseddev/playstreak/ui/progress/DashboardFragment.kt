@@ -1,9 +1,12 @@
 package com.pseddev.playstreak.ui.progress
 
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -42,47 +45,12 @@ class DashboardFragment : Fragment() {
         viewModel.todayActivities.observe(viewLifecycleOwner) { activities ->
             Log.d("DashboardUI", "Observer called with ${activities.size} activities")
             binding.todayCountText.text = "${activities.size} activities"
-            
-            if (activities.isNotEmpty()) {
-                Log.d("DashboardUI", "Showing activities group with ${activities.size} activities")
-                binding.todayActivitiesGroup.visibility = View.VISIBLE
-                val activitySummary = activities.joinToString("\n") { activityWithPiece ->
-                    val activity = activityWithPiece.activity
-                    val piece = activityWithPiece.pieceOrTechnique
-                    val time = android.text.format.DateFormat.format("h:mm a", activity.timestamp)
-                    val level = "(${activity.level})"
-                    val minutes = if (activity.minutes > 0) " (${activity.minutes} min)" else ""
-                    val type = activity.activityType.name.lowercase().replaceFirstChar { it.uppercase() }
-                    "• $time - ${piece.name} - $type $level$minutes"
-                }
-                binding.todayActivitiesList.text = activitySummary
-                Log.d("DashboardUI", "Set todayActivitiesList text to: $activitySummary")
-            } else {
-                Log.d("DashboardUI", "Hiding activities group - should be empty now")
-                binding.todayActivitiesGroup.visibility = View.GONE
-                binding.todayActivitiesList.text = ""
-                Log.d("DashboardUI", "Set todayActivitiesGroup visibility to GONE and cleared text")
-            }
+            populateActivityRows(binding.todayActivitiesList, activities)
         }
-        
+
         viewModel.yesterdayActivities.observe(viewLifecycleOwner) { activities ->
             binding.yesterdayCountText.text = "${activities.size} activities"
-            
-            if (activities.isNotEmpty()) {
-                binding.yesterdayActivitiesGroup.visibility = View.VISIBLE
-                val activitySummary = activities.joinToString("\n") { activityWithPiece ->
-                    val activity = activityWithPiece.activity
-                    val piece = activityWithPiece.pieceOrTechnique
-                    val time = android.text.format.DateFormat.format("h:mm a", activity.timestamp)
-                    val level = "(${activity.level})"
-                    val minutes = if (activity.minutes > 0) " (${activity.minutes} min)" else ""
-                    val type = activity.activityType.name.lowercase().replaceFirstChar { it.uppercase() }
-                    "• $time - ${piece.name} - $type $level$minutes"
-                }
-                binding.yesterdayActivitiesList.text = activitySummary
-            } else {
-                binding.yesterdayActivitiesGroup.visibility = View.GONE
-            }
+            populateActivityRows(binding.yesterdayActivitiesList, activities)
         }
         
         viewModel.currentStreak.observe(viewLifecycleOwner) { streak ->
@@ -159,6 +127,45 @@ class DashboardFragment : Fragment() {
     private fun setupClickListeners() {
         binding.buttonAddActivity.setOnClickListener {
             findNavController().navigate(R.id.action_viewProgressFragment_to_addActivityFragment)
+        }
+    }
+
+    /**
+     * Fills a container with one tappable row per activity; tapping opens the activity detail.
+     */
+    private fun populateActivityRows(container: LinearLayout, activities: List<ActivityWithPiece>) {
+        container.removeAllViews()
+
+        if (activities.isEmpty()) {
+            container.visibility = View.GONE
+            return
+        }
+        container.visibility = View.VISIBLE
+
+        for (activityWithPiece in activities) {
+            val activity = activityWithPiece.activity
+            val piece = activityWithPiece.pieceOrTechnique
+            val time = android.text.format.DateFormat.format("h:mm a", activity.timestamp)
+            val level = "(${activity.level})"
+            val minutes = if (activity.minutes > 0) " (${activity.minutes} min)" else ""
+            val type = activity.activityType.name.lowercase().replaceFirstChar { it.uppercase() }
+
+            val row = TextView(requireContext()).apply {
+                text = "• $time - ${piece.name} - $type $level$minutes"
+                setTextAppearance(com.google.android.material.R.style.TextAppearance_MaterialComponents_Body2)
+                val secondaryColor = TypedValue()
+                requireContext().theme.resolveAttribute(android.R.attr.textColorSecondary, secondaryColor, true)
+                setTextColor(resources.getColorStateList(secondaryColor.resourceId, requireContext().theme))
+                val rippleBackground = TypedValue()
+                requireContext().theme.resolveAttribute(android.R.attr.selectableItemBackground, rippleBackground, true)
+                setBackgroundResource(rippleBackground.resourceId)
+                setPadding(0, 8, 0, 8)
+                setOnClickListener {
+                    ActivityDetailDialogFragment.newInstance(activityWithPiece)
+                        .show(parentFragmentManager, "ActivityDetailDialog")
+                }
+            }
+            container.addView(row)
         }
     }
     

@@ -73,20 +73,13 @@
                     android:text="0 activities"
                     android:textAppearance="?attr/textAppearanceBody1" />
 
-                <androidx.constraintlayout.widget.Group
-                    android:id="@+id/todayActivitiesGroup"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    app:constraint_referenced_ids="todayActivitiesList" />
-
-                <TextView
+                <LinearLayout
                     android:id="@+id/todayActivitiesList"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:textAppearance="?attr/textAppearanceBody2"
-                    android:textColor="?android:attr/textColorSecondary" />
+                    android:orientation="vertical"
+                    android:visibility="gone" />
 
             </LinearLayout>
 
@@ -119,20 +112,13 @@
                     android:text="0 activities"
                     android:textAppearance="?attr/textAppearanceBody1" />
 
-                <androidx.constraintlayout.widget.Group
-                    android:id="@+id/yesterdayActivitiesGroup"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    app:constraint_referenced_ids="yesterdayActivitiesList" />
-
-                <TextView
+                <LinearLayout
                     android:id="@+id/yesterdayActivitiesList"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:textAppearance="?attr/textAppearanceBody2"
-                    android:textColor="?android:attr/textColorSecondary" />
+                    android:orientation="vertical"
+                    android:visibility="gone" />
 
             </LinearLayout>
 

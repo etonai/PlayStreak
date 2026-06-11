@@ -297,6 +297,43 @@ class CalendarFragment : Fragment() {
         itemBinding.editButton.setOnClickListener {
             editActivity(item)
         }
+
+        // Tapping the card body (outside the action buttons) shows the activity detail
+        itemBinding.root.setOnClickListener {
+            showActivityDetail(item)
+        }
+    }
+
+    private fun showActivityDetail(item: ActivityWithPiece) {
+        ActivityDetailDialogFragment.newInstance(item)
+            .show(parentFragmentManager, "ActivityDetailDialog")
+    }
+
+    /**
+     * Simple mode: one tappable text row per activity; tapping opens the activity detail.
+     */
+    private fun populateSimpleActivityList(activities: List<ActivityWithPiece>) {
+        binding.linearLayoutSelectedDateActivities.removeAllViews()
+
+        for (item in activities) {
+            val time = android.text.format.DateFormat.format("h:mm a", item.activity.timestamp)
+            val type = item.activity.activityType.name.lowercase().replaceFirstChar { it.uppercase() }
+            val level = "(${item.activity.level})"
+            val minutes = if (item.activity.minutes > 0) " - ${item.activity.minutes} min" else ""
+
+            val row = TextView(requireContext()).apply {
+                text = "$time - ${item.pieceOrTechnique.name} - $type $level$minutes"
+                setTextAppearance(com.google.android.material.R.style.TextAppearance_MaterialComponents_Body2)
+                val rippleBackground = android.util.TypedValue()
+                requireContext().theme.resolveAttribute(android.R.attr.selectableItemBackground, rippleBackground, true)
+                setBackgroundResource(rippleBackground.resourceId)
+                setPadding(0, 8, 0, 8)
+                setOnClickListener {
+                    showActivityDetail(item)
+                }
+            }
+            binding.linearLayoutSelectedDateActivities.addView(row)
+        }
     }
     
     private fun updateSelectedDateView(activities: List<ActivityWithPiece>) {
@@ -344,19 +381,11 @@ class CalendarFragment : Fragment() {
                 binding.linearLayoutSelectedDateActivities.visibility = View.VISIBLE
                 populateActivityList(activities)
             } else {
-                // Regular mode: Show simple text summary
-                binding.selectedDateActivities.visibility = View.VISIBLE
-                binding.linearLayoutSelectedDateActivities.visibility = View.GONE
-                binding.linearLayoutSelectedDateActivities.removeAllViews()
-                
-                val summary = activities.joinToString("\n") { item ->
-                    val time = android.text.format.DateFormat.format("h:mm a", item.activity.timestamp)
-                    val type = item.activity.activityType.name.lowercase().replaceFirstChar { it.uppercase() }
-                    val level = "(${item.activity.level})"
-                    val minutes = if (item.activity.minutes > 0) " - ${item.activity.minutes} min" else ""
-                    "$time - ${item.pieceOrTechnique.name} - $type $level$minutes"
-                }
-                binding.selectedDateActivities.text = summary
+                // Regular mode: Show simple tappable rows (tap opens activity detail)
+                binding.selectedDateActivities.visibility = View.GONE
+                binding.selectedDateActivities.text = ""
+                binding.linearLayoutSelectedDateActivities.visibility = View.VISIBLE
+                populateSimpleActivityList(activities)
             }
         }
         
