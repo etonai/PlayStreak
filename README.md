@@ -202,11 +202,11 @@ When reporting issues:
 ## Version History
 
 - **v1.0.7.4** - Latest features and bug fixes
-- **v1.0.8** - Target version for current development
+- **v1.0.3** - Target version for current development
 
 ## License
 
-Copyright (c) 2025 PlayStreak. All rights reserved.
+Copyright (c) 2026 PlayStreak. All rights reserved.
 
 This software is proprietary and confidential. See the [COPYRIGHT](COPYRIGHT) file for full licensing terms.
 
