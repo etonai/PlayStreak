@@ -2,7 +2,6 @@ package com.pseddev.playstreak.utils
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.pseddev.playstreak.BuildConfig
 
 /**
  * Manages Pro user status using SharedPreferences for local storage.
@@ -17,10 +16,10 @@ class ProUserManager private constructor(context: Context) {
     
     /**
      * Check if the current user is a Pro subscriber
-     * @return true if user has Pro status, false for free user
+     * @return always true - all users are Pro (DevCycle 2026-0001 Phase 3)
      */
     fun isProUser(): Boolean {
-        return BuildConfig.IS_PRO_VERSION || sharedPreferences.getBoolean(KEY_IS_PRO_USER, false)
+        return true
     }
     
     /**

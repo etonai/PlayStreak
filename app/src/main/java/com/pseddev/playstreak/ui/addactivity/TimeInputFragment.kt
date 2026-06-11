@@ -70,17 +70,17 @@ class TimeInputFragment : Fragment() {
                 5 // Default to 5 minutes if no input provided
             }
             
-            navigateToSummary(minutes)
+            navigateToNotesInput(minutes)
         }
-        
+
         binding.buttonSkip.setOnClickListener {
-            navigateToSummary(-1)
+            navigateToNotesInput(-1)
         }
     }
-    
-    private fun navigateToSummary(minutes: Int) {
+
+    private fun navigateToNotesInput(minutes: Int) {
         val action = TimeInputFragmentDirections
-            .actionTimeInputFragmentToSummaryFragment(
+            .actionTimeInputFragmentToNotesInputFragment(
                 activityType = args.activityType,
                 pieceId = args.pieceId,
                 pieceName = args.pieceName,

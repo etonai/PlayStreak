@@ -174,10 +174,14 @@
         <argument
             android:name="performanceType"
             app:argType="string" />
-            
+
         <action
             android:id="@+id/action_timeInputFragment_to_summaryFragment"
             app:destination="@id/summaryFragment" />
+
+        <action
+            android:id="@+id/action_timeInputFragment_to_notesInputFragment"
+            app:destination="@id/notesInputFragment" />
     </fragment>
     
     <fragment
@@ -201,7 +205,11 @@
         <argument
             android:name="performanceType"
             app:argType="string" />
-            
+        <argument
+            android:name="minutes"
+            app:argType="integer"
+            android:defaultValue="-1" />
+
         <action
             android:id="@+id/action_notesInputFragment_to_summaryFragment"
             app:destination="@id/summaryFragment" />

@@ -112,6 +112,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/performanceTypeGroup" />
 
+    <Button
+        android:id="@+id/buttonQuickSave"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Quick Save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonContinue" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -50,10 +51,12 @@ class SelectLevelFragment : Fragment() {
             // Set edit mode in ViewModel
             viewModel.setEditMode(editActivity)
         }
-        
+
         // Pre-populate fields in edit mode
         viewModel.editActivity.observe(viewLifecycleOwner) { editActivity ->
             if (editActivity != null) {
+                // Quick Save is hidden in edit mode - it would discard existing time/notes data
+                binding.buttonQuickSave.visibility = View.GONE
                 // Pre-select the level
                 when (editActivity.level) {
                     1 -> binding.radioLevel1.isChecked = true
@@ -73,24 +76,9 @@ class SelectLevelFragment : Fragment() {
         }
         
         binding.buttonContinue.setOnClickListener {
-            val selectedLevel = when {
-                binding.radioLevel1.isChecked -> 1
-                binding.radioLevel2.isChecked -> 2
-                binding.radioLevel3.isChecked -> 3
-                binding.radioLevel4.isChecked -> 4
-                else -> return@setOnClickListener
-            }
-            
-            val performanceType = if (args.activityType == ActivityType.PERFORMANCE) {
-                when {
-                    binding.radioPerformanceOnline.isChecked -> "online"
-                    binding.radioPerformanceLive.isChecked -> "live"
-                    else -> "practice"
-                }
-            } else {
-                "practice"
-            }
-            
+            val selectedLevel = getSelectedLevel() ?: return@setOnClickListener
+            val performanceType = getSelectedPerformanceType()
+
             // Determine next navigation
             when {
                 // Time input for Practice Level 2 or any Technique
@@ -106,8 +94,8 @@ class SelectLevelFragment : Fragment() {
                         )
                     findNavController().navigate(action)
                 }
-                // Notes input for Performance
-                args.activityType == ActivityType.PERFORMANCE -> {
+                // Notes input for everything else (Performance, and Practice without time input)
+                else -> {
                     val action = SelectLevelFragmentDirections
                         .actionSelectLevelFragmentToNotesInputFragment(
                             activityType = args.activityType,
@@ -118,22 +106,63 @@ class SelectLevelFragment : Fragment() {
                         )
                     findNavController().navigate(action)
                 }
-                // Direct to summary
-                else -> {
-                    val action = SelectLevelFragmentDirections
-                        .actionSelectLevelFragmentToSummaryFragment(
-                            activityType = args.activityType,
-                            pieceId = args.pieceId,
-                            pieceName = args.pieceName,
-                            level = selectedLevel,
-                            performanceType = performanceType
-                        )
-                    findNavController().navigate(action)
+            }
+        }
+
+        binding.buttonQuickSave.setOnClickListener {
+            val selectedLevel = getSelectedLevel() ?: return@setOnClickListener
+            val performanceType = getSelectedPerformanceType()
+
+            // Save immediately with defaults, skipping the remaining screens
+            viewModel.saveActivity(
+                pieceId = args.pieceId,
+                activityType = args.activityType,
+                level = selectedLevel,
+                performanceType = performanceType,
+                minutes = -1,
+                notes = ""
+            )
+        }
+
+        viewModel.navigateToMain.observe(viewLifecycleOwner) { shouldNavigate ->
+            if (shouldNavigate) {
+                // Pop back to the screen that started the add activity flow; this fragment
+                // can also be reached directly from the progress screen
+                if (!findNavController().popBackStack(com.pseddev.playstreak.R.id.addActivityFragment, true)) {
+                    findNavController().popBackStack(com.pseddev.playstreak.R.id.progressFragment, false)
                 }
+                viewModel.doneNavigating()
+            }
+        }
+
+        viewModel.errorMessage.observe(viewLifecycleOwner) { errorMessage ->
+            errorMessage?.let {
+                Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
+                viewModel.clearErrorMessage()
             }
         }
     }
-    
+
+    private fun getSelectedLevel(): Int? = when {
+        binding.radioLevel1.isChecked -> 1
+        binding.radioLevel2.isChecked -> 2
+        binding.radioLevel3.isChecked -> 3
+        binding.radioLevel4.isChecked -> 4
+        else -> null
+    }
+
+    private fun getSelectedPerformanceType(): String {
+        return if (args.activityType == ActivityType.PERFORMANCE) {
+            when {
+                binding.radioPerformanceOnline.isChecked -> "online"
+                binding.radioPerformanceLive.isChecked -> "live"
+                else -> "practice"
+            }
+        } else {
+            "practice"
+        }
+    }
+
     private fun setupLevelOptions() {
         if (args.activityType == ActivityType.PRACTICE) {
             binding.textLevelLabel.text = "Practice Level:"

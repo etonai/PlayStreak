@@ -74,6 +74,7 @@ class NotesInputFragment : Fragment() {
                 pieceName = args.pieceName,
                 level = args.level,
                 performanceType = args.performanceType,
+                minutes = args.minutes,
                 notes = notes
             )
         findNavController().navigate(action)
