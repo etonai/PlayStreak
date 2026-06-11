@@ -2,7 +2,7 @@
 
 PlayStreak is an Android app for musicians to log practice sessions, performances, and progress — helping you maintain streaks, track quality levels, and visualize your musical development over time. It is built natively for Android using Kotlin, Room (SQLite), MVVM architecture, and Material Design components.
 
-**Current Version**: 1.0.8.15-beta
+**Current Version**: 1.0.3
 
 **Download on Google Play**: [PlayStreak on Google Play](https://play.google.com/store/apps/details?id=com.pseddev.playstreak)
 

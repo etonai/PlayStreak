@@ -57,7 +57,16 @@ data class ExportPiece(
     
     @SerializedName("isFavorite")
     val isFavorite: Boolean,
-    
+
+    @SerializedName("key")
+    val key: String? = null, // Musical key, optional for backward compatibility
+
+    @SerializedName("artist")
+    val artist: String? = null, // Composer/Artist name, optional for backward compatibility
+
+    @SerializedName("notes")
+    val notes: String? = null, // General notes, optional for backward compatibility
+
     @SerializedName("statistics")
     val statistics: PieceStatistics
 )

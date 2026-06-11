@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Oval background for each calendar day cell -->
+<!-- Transparent by default; color is set programmatically in CalendarFragment -->
+<!-- Selection state: border color changes to calendar_selection_ring (#FFCC99FF) -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid android:color="@android:color/transparent" />
+    <stroke
+        android:width="1dp"
+        android:color="@android:color/transparent" />
+</shape>

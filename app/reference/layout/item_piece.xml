@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PlayStreak piece list item -->
+<!-- Simple full-width text row with selectable ripple background -->
+<!-- Piece details expand in a bottom card on selection (see fragment_pieces.xml) -->
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/textPieceName"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:paddingStart="32dp"
+    android:textSize="16sp"
+    android:background="?attr/selectableItemBackground" />

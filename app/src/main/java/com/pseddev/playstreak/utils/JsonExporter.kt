@@ -112,6 +112,9 @@ object JsonExporter {
             name = piece.name,
             type = piece.type,
             isFavorite = piece.isFavorite,
+            key = piece.key,
+            artist = piece.artist,
+            notes = piece.notes,
             statistics = statistics
         )
     }

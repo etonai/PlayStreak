@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.pseddev.playstreak.databinding.FragmentConfigurationBinding
 import com.pseddev.playstreak.utils.PreferencesManager
 import com.pseddev.playstreak.utils.ConfigurationManager
+import com.pseddev.playstreak.utils.ProUserManager
 
 class ConfigurationFragment : Fragment() {
     
@@ -42,6 +44,23 @@ class ConfigurationFragment : Fragment() {
         setupClickListeners()
         setupPruningToggle()
         setupAchievementCelebrationsToggle()
+        setupProModeToggle()
+    }
+
+    private fun setupProModeToggle() {
+        val proUserManager = ProUserManager.getInstance(requireContext())
+
+        // Initialize toggle with current Pro status (defaults to off for new users)
+        binding.proModeToggle.isChecked = proUserManager.isProUser()
+
+        binding.proModeToggle.setOnCheckedChangeListener { _, isChecked ->
+            proUserManager.setProUser(isChecked)
+            Toast.makeText(
+                requireContext(),
+                if (isChecked) "Pro Mode enabled" else "Pro Mode disabled",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
     
     private fun setupObservers() {

@@ -18,4 +18,33 @@
     
     <!-- Accessibility -->
     <string name="add_activity">Add Activity</string>
+
+    <!-- Musical Keys (circle of fifths, Major and Minor) -->
+    <string-array name="musical_keys">
+        <item>None</item>
+        <item>C Major</item>
+        <item>C Minor</item>
+        <item>G Major</item>
+        <item>G Minor</item>
+        <item>D Major</item>
+        <item>D Minor</item>
+        <item>A Major</item>
+        <item>A Minor</item>
+        <item>E Major</item>
+        <item>E Minor</item>
+        <item>B Major</item>
+        <item>B Minor</item>
+        <item>F# Major</item>
+        <item>F# Minor</item>
+        <item>Db Major</item>
+        <item>Db Minor</item>
+        <item>Ab Major</item>
+        <item>Ab Minor</item>
+        <item>Eb Major</item>
+        <item>Eb Minor</item>
+        <item>Bb Major</item>
+        <item>Bb Minor</item>
+        <item>F Major</item>
+        <item>F Minor</item>
+    </string-array>
 </resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- State list: shows filled star when activated/selected, outline star otherwise -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_activated="true" android:drawable="@drawable/ic_star_filled_yellow" />
+    <item android:state_selected="true" android:drawable="@drawable/ic_star_filled_yellow" />
+    <item android:drawable="@drawable/ic_star_outline_yellow" />
+</selector>

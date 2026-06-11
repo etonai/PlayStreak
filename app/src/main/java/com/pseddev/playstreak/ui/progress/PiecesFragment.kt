@@ -72,7 +72,10 @@ class PiecesFragment : Fragment() {
                 val dialog = EditPieceDialogFragment.newInstance(
                     pieceWithStats.piece.id,
                     pieceWithStats.piece.name,
-                    pieceWithStats.piece.type
+                    pieceWithStats.piece.type,
+                    pieceWithStats.piece.artist,
+                    pieceWithStats.piece.key,
+                    pieceWithStats.piece.notes
                 )
                 dialog.show(parentFragmentManager, "EditPieceDialog")
             },
@@ -119,6 +122,27 @@ class PiecesFragment : Fragment() {
         // Basic Information Section
         binding.pieceTypeText.text = "Type: ${piece.type.name.lowercase().replaceFirstChar { it.uppercase() }}"
         binding.isFavoriteText.text = "Favorite: ${if (piece.isFavorite) "Yes" else "No"}"
+
+        // Piece metadata (shown only when populated)
+        if (!piece.artist.isNullOrBlank()) {
+            binding.artistText.text = "Artist: ${piece.artist}"
+            binding.artistText.visibility = View.VISIBLE
+        } else {
+            binding.artistText.visibility = View.GONE
+        }
+        if (!piece.key.isNullOrBlank()) {
+            binding.keyText.text = "Key: ${piece.key}"
+            binding.keyText.visibility = View.VISIBLE
+        } else {
+            binding.keyText.visibility = View.GONE
+        }
+        if (!piece.notes.isNullOrBlank()) {
+            binding.notesText.text = "Notes: ${piece.notes}"
+            binding.notesText.visibility = View.VISIBLE
+        } else {
+            binding.notesText.visibility = View.GONE
+        }
+
         binding.dateCreatedText.text = "Created: ${DateFormatter.formatDateOnly(piece.dateCreated)}"
         
         // Practice Statistics Section (from Phase 1 statistics)

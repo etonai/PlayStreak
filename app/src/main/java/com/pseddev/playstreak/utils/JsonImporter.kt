@@ -292,7 +292,10 @@ object JsonImporter {
             thirdLastPerformanceDate = parseTimestamp(exportPiece.statistics.thirdLastPerformanceDate),
             lastSatisfactoryPractice = parseTimestamp(exportPiece.statistics.lastSatisfactoryPractice),
             lastSatisfactoryPerformance = parseTimestamp(exportPiece.statistics.lastSatisfactoryPerformance),
-            lastUpdated = parseTimestamp(exportPiece.statistics.lastUpdated) ?: System.currentTimeMillis()
+            lastUpdated = parseTimestamp(exportPiece.statistics.lastUpdated) ?: System.currentTimeMillis(),
+            key = exportPiece.key,
+            artist = exportPiece.artist,
+            notes = exportPiece.notes
         )
     }
     

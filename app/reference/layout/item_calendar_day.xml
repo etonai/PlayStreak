@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PlayStreak calendar day cell -->
+<!-- Used by kizitonwose CalendarView via cv_dayViewResource -->
+<!-- Background color is set programmatically in CalendarFragment based on activity count and type -->
+<!-- Selection ring is applied via calendar_selection_ring color when day is selected -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="52dp"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="4dp">
+
+    <TextView
+        android:id="@+id/calendarDayText"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:textAppearance="?attr/textAppearanceBody2"
+        android:textColor="?android:attr/textColorPrimary"
+        android:background="@drawable/calendar_day_background"
+        android:textStyle="bold" />
+
+</LinearLayout>

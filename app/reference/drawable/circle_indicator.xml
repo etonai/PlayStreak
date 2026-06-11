@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Solid oval used as the color indicator dot next to a selected date label -->
+<!-- Fill color is set programmatically to match the day's calendar color -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid android:color="@color/calendar_no_activity" />
+</shape>

@@ -174,6 +174,30 @@
                     android:textAppearance="?attr/textAppearanceBody2" />
 
                 <TextView
+                    android:id="@+id/artistText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/keyText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/notesText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:visibility="gone" />
+
+                <TextView
                     android:id="@+id/dateCreatedText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

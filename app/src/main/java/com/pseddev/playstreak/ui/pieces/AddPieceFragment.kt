@@ -5,11 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.pseddev.playstreak.PlayStreakApplication
+import com.pseddev.playstreak.R
 import com.pseddev.playstreak.data.entities.ItemType
 import com.pseddev.playstreak.databinding.FragmentAddPieceBinding
 
@@ -36,11 +38,19 @@ class AddPieceFragment : Fragment() {
     
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        
+
+        setupKeyDropdown()
         setupClickListeners()
         observeViewModel()
     }
-    
+
+    private fun setupKeyDropdown() {
+        val keys = resources.getStringArray(R.array.musical_keys)
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, keys)
+        binding.keyDropdown.setAdapter(adapter)
+        binding.keyDropdown.setText(keys[0], false)  // Default to "None"
+    }
+
     private fun setupClickListeners() {
         binding.saveButton.setOnClickListener {
             val name = binding.pieceNameEditText.text?.toString()?.trim()
@@ -55,8 +65,12 @@ class AddPieceFragment : Fragment() {
             val type = if (binding.radioPiece.isChecked) ItemType.PIECE else ItemType.TECHNIQUE
             // Only mark as favorite if the switch is visible and checked
             val isFavorite = binding.favoriteSwitch.visibility == View.VISIBLE && binding.favoriteSwitch.isChecked
-            
-            viewModel.savePiece(name, type, isFavorite)
+
+            val artist = binding.artistEditText.text?.toString()?.trim()?.takeIf { it.isNotEmpty() }
+            val key = binding.keyDropdown.text?.toString()?.takeIf { it.isNotEmpty() && it != "None" }
+            val notes = binding.notesEditText.text?.toString()?.trim()?.takeIf { it.isNotEmpty() }
+
+            viewModel.savePiece(name, type, isFavorite, artist, key, notes)
         }
         
         binding.cancelButton.setOnClickListener {

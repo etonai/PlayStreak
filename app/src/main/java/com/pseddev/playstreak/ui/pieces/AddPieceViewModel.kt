@@ -58,7 +58,14 @@ class AddPieceViewModel(
         }
     }
     
-    fun savePiece(name: String, type: ItemType, isFavorite: Boolean) {
+    fun savePiece(
+        name: String,
+        type: ItemType,
+        isFavorite: Boolean,
+        artist: String? = null,
+        key: String? = null,
+        notes: String? = null
+    ) {
         viewModelScope.launch {
             try {
                 // Check for duplicate name first (case-insensitive)
@@ -88,7 +95,10 @@ class AddPieceViewModel(
                 val piece = PieceOrTechnique(
                     name = normalizedName,
                     type = type,
-                    isFavorite = isFavorite
+                    isFavorite = isFavorite,
+                    artist = artist,
+                    key = key,
+                    notes = notes
                 )
                 
                 repository.insertPieceOrTechnique(piece)
